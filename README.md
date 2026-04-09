@@ -11,11 +11,12 @@
 
 *The world's most advanced astronomical AI platform combining cutting-edge 3D visualization, quantum-inspired UI, and real-time cosmic intelligence.*
 
-[🚀 Live Demo](#) | [📖 Documentation](#) | [🐛 Report Bug](https://github.com/zahidizubair0/starz-nexus/issues) | [✨ Request Feature](https://github.com/zahidizubair0/starz-nexus/issues)
+[🚀 Live Demo](#) | [📖 Documentation](#) | [🐛 Report Bug](https://github.com/Zubair-zahidi/starz-chatbot-ui/issues) | [✨ Request Feature](https://github.com/Zubair-zahidi/starz-chatbot-ui/issues)
 
 </div>
 
 ---
+![Dashboard](./img2.png)
 
 ## 📋 Table of Contents
 
@@ -128,25 +129,25 @@
 ### One-Click Setup (Docker)
 ```bash
 # Clone the repository
-git clone https://github.com/zahidizubair0/starz-nexus.git
-cd starz-nexus
+git clone https://github.com/Zubair-zahidi/starz-chatbot-ui.git
+cd starz-chatbot-ui
 
 # Start all services
 docker-compose up -d
 
 # Setup AI models
-docker exec starz-nexus-ollama ollama pull llama3.1
-docker exec starz-nexus-ollama ollama pull dolphin3
+docker exec starz-chatbot-ui-ollama ollama pull llama3.1
+docker exec starz-chatbot-ui-ollama ollama pull dolphin3
 
 # Seed database
-docker exec starz-nexus-backend npm run db:seed
+docker exec starz-chatbot-ui-backend npm run db:seed
 ```
 
 ### Manual Setup
 ```bash
 # Clone and setup backend
-git clone https://github.com/zahidizubair0/starz-nexus.git
-cd starz-nexus/starz-nexus-backend
+git clone https://github.com/Zubair-zahidi/starz-chatbot-ui.git
+cd starz-chatbot-ui/starz-nexus-backend
 
 # Install dependencies
 npm install
@@ -347,7 +348,7 @@ git add .
 git commit -m "Initial commit: STARZ NEXUS - Enterprise Cosmic Intelligence Platform"
 
 # Add remote repository
-git remote add origin https://github.com/zahidizubair0/starz-nexus.git
+git remote add origin https://github.com/Zubair-zahidi/starz-chatbot-ui.git
 
 # Push to GitHub
 git push -u origin main
@@ -407,6 +408,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Made with ❤️ for the cosmos**
 
 [⬆️ Back to Top](#-starz-nexus---enterprise-cosmic-intelligence-platform)
-
-</div></content>
-<parameter name="filePath">c:\Users\zahid\Desktop\Chat-z\Chatbot\README.md
