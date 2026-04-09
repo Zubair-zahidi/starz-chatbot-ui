@@ -11,7 +11,7 @@
 
 *The world's most advanced astronomical AI platform combining cutting-edge 3D visualization, quantum-inspired UI, and real-time cosmic intelligence.*
 
-[🚀 Live Demo](#) | [📖 Documentation](#) | [🐛 Report Bug](https://github.com/yourusername/starz-nexus/issues) | [✨ Request Feature](https://github.com/yourusername/starz-nexus/issues)
+[🚀 Live Demo](#) | [📖 Documentation](#) | [🐛 Report Bug](https://github.com/zahidizubair0/starz-nexus/issues) | [✨ Request Feature](https://github.com/zahidizubair0/starz-nexus/issues)
 
 </div>
 
@@ -97,19 +97,19 @@
 ## 📸 Screenshots
 
 ### 🏠 Dashboard
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](./img2.png)
 *Main dashboard with cosmic visualizations and quick actions*
 
 ### 💬 Chat Interface
-![Chat Interface](./screenshots/chat-interface.png)
+![Chat Interface](./img1.png)
 *Advanced AI chat with real-time typing effects and model selection*
 
 ### 👑 Admin Panel
-![Admin Panel](./screenshots/admin-panel.png)
+![Admin Panel](./img5.png)
 *Comprehensive admin dashboard for system management*
 
 ### 📊 Analytics & Visualizations
-![Analytics](./screenshots/analytics.png)
+![Analytics](./img5.png)
 *Real-time astronomical data visualization and analytics*
 
 > **📝 Note**: Screenshots are placeholders. Replace the `.placeholder` files in `/screenshots/` with actual PNG images of your application.
@@ -128,7 +128,7 @@
 ### One-Click Setup (Docker)
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/starz-nexus.git
+git clone https://github.com/zahidizubair0/starz-nexus.git
 cd starz-nexus
 
 # Start all services
@@ -145,7 +145,7 @@ docker exec starz-nexus-backend npm run db:seed
 ### Manual Setup
 ```bash
 # Clone and setup backend
-git clone https://github.com/yourusername/starz-nexus.git
+git clone https://github.com/zahidizubair0/starz-nexus.git
 cd starz-nexus/starz-nexus-backend
 
 # Install dependencies
@@ -347,7 +347,7 @@ git add .
 git commit -m "Initial commit: STARZ NEXUS - Enterprise Cosmic Intelligence Platform"
 
 # Add remote repository
-git remote add origin https://github.com/yourusername/starz-nexus.git
+git remote add origin https://github.com/zahidizubair0/starz-nexus.git
 
 # Push to GitHub
 git push -u origin main
