@@ -9,7 +9,7 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
 
-*The world's most advanced astronomical AI platform combining cutting-edge 3D visualization, quantum-inspired UI, and real-time cosmic intelligence.*
+*The  advanced astronomical AI platform combining cutting-edge 3D visualization, quantum-inspired UI, and real-time cosmic intelligence.*
 
 [🚀 Live Demo](#) | [📖 Documentation](#) | [🐛 Report Bug](https://github.com/Zubair-zahidi/starz-chatbot-ui/issues) | [✨ Request Feature](https://github.com/Zubair-zahidi/starz-chatbot-ui/issues)
 
