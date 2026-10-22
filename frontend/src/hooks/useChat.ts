@@ -1,8 +1,10 @@
+import { isCancel } from 'axios';
+import { errorMessage } from '../utils/errorMessage';
 import { useEffect, useState, useRef } from 'react';
 import { chatApi } from '../services/api/chat';
 import type { ChatSession, Message } from '../types';
 import { toast } from 'react-hot-toast';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/authState';
 
 export function useChat(sessionId?: string) {
   const { isAuthenticated } = useAuth();
@@ -53,7 +55,7 @@ export function useChat(sessionId?: string) {
         }
 
         setActiveSession(session);
-        setMessages((session as any).messages || []);
+        setMessages(session.messages || []);
         setSessions([]);
         return;
       }
@@ -71,9 +73,9 @@ export function useChat(sessionId?: string) {
       setActiveSession(session);
 
       const full = await chatApi.getSession(session._id);
-      setMessages((full as any).messages || []);
-    } catch (err: any) {
-      toast.error(err?.message || 'Failed to load chat');
+      setMessages(full.messages || []);
+    } catch (err: unknown) {
+      toast.error(errorMessage(err, 'Failed to load chat'));
     } finally {
       setIsLoading(false);
     }
@@ -169,9 +171,8 @@ export function useChat(sessionId?: string) {
             : message
         )
       );
-    } catch (err: any) {
-      const canceled = String(err?.code || '').toLowerCase().includes('canceled') ||
-        String(err?.message || '').toLowerCase().includes('canceled');
+    } catch (err: unknown) {
+      const canceled = isCancel(err) || controller.signal.aborted;
 
       if (canceled) {
         // Remove the cancelled assistant message
@@ -191,7 +192,7 @@ export function useChat(sessionId?: string) {
         )
       );
 
-      const msg = err?.response?.data?.error?.message || err?.message;
+      const msg = errorMessage(err, 'Failed to send message');
       if (String(msg || '').toLowerCase().includes('sign in')) {
         setGuestLimitReached(true);
       }
@@ -207,8 +208,8 @@ export function useChat(sessionId?: string) {
     try {
       await chatApi.deleteMessage(messageId);
       setMessages((prev) => prev.filter((m) => m._id !== messageId));
-    } catch (err: any) {
-      toast.error(err?.message || 'Failed to delete message');
+    } catch (err: unknown) {
+      toast.error(errorMessage(err, 'Failed to delete message'));
     }
   };
 
@@ -217,7 +218,7 @@ export function useChat(sessionId?: string) {
       const session = await chatApi.createGuestSession(`Guest Chat ${new Date().toLocaleString()}`);
       localStorage.setItem('guest_session_id', session._id);
       setActiveSession(session);
-      setMessages((session as any).messages || []);
+      setMessages(session.messages || []);
       return session;
     } else {
       const session = await chatApi.createSession(`Chat ${new Date().toLocaleString()}`);
@@ -252,14 +253,14 @@ export function useChat(sessionId?: string) {
       await chatApi.clearGuestSession(id);
       setMessages([]);
       const full = await chatApi.getGuestSession(id);
-      setMessages((full as any).messages || []);
+      setMessages(full.messages || []);
       return;
     }
 
     await chatApi.clearSession(id);
     setMessages([]);
     const full = await chatApi.getSession(id);
-    setMessages((full as any).messages || []);
+    setMessages(full.messages || []);
   };
 
   const exportSession = async (id: string, format: 'json' | 'csv' | 'txt' = 'json') => {

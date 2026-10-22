@@ -73,7 +73,7 @@ export const register = async (
         settings: user.settings,
       },
       tokens,
-      ...(verificationToken ? { verificationToken } : {}),
+      ...(verificationToken && config.NODE_ENV !== 'production' ? { verificationToken } : {}),
     }, config.REQUIRE_EMAIL_VERIFICATION ? 'Registration successful. Please verify your email.' : 'Registration successful');
   } catch (error) {
     next(error);
@@ -368,9 +368,7 @@ export const forgotPassword = async (
     await user.save();
 
     // In production: Send email with reset link
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-    logger.info(`Password reset token for ${email}: ${resetToken}`);
-    logger.info(`Reset URL: ${resetUrl}`);
+    logger.info('Password reset requested');
 
     // For development, return the token
     if (process.env.NODE_ENV === 'development') {

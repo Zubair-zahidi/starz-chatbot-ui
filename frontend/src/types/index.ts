@@ -71,7 +71,10 @@ export interface CelestialObject {
   images: string[];
 }
 
+export type ApiUser = Omit<User, '_id'> & { _id?: string; id?: string };
+
 export interface AuthResponse {
+  verificationToken?: string;
   user: User;
   tokens: {
     access: string;

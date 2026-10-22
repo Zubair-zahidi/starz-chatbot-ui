@@ -41,7 +41,7 @@ export const validate = (schema: Joi.ObjectSchema) => {
           type: detail.type,
         }));
 
-        logger.debug('Validation failed:', { errors, body: req.body });
+        logger.debug('Validation failed:', { errors });
         
         throw ApiError.validationError('Validation failed', errors);
       }

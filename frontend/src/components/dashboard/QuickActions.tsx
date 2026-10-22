@@ -21,7 +21,7 @@ const QuickActions: React.FC = () => {
             key={a.label}
             onClick={() => {
               // For now we just route to chat; the chat page has its own quick actions too.
-              navigate('/chat', { state: { seed: a.query } as any });
+              navigate('/chat', { state: { seed: a.query } });
             }}
             className="action-quantum"
           >

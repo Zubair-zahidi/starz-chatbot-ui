@@ -1,8 +1,15 @@
 import dotenv from 'dotenv';
 import path from 'path';
+import { randomBytes } from 'crypto';
 
 // Load environment variables
 dotenv.config();
+
+const jwtSecret = process.env.JWT_SECRET;
+if (process.env.NODE_ENV === 'production' &&
+    (!jwtSecret || jwtSecret.length < 32 || jwtSecret === 'your-super-secret-jwt-key')) {
+  throw new Error('Set JWT_SECRET to a unique secret of at least 32 characters before starting production.');
+}
 
 export const config = {
   // Server
@@ -22,7 +29,8 @@ export const config = {
   OLLAMA_TIMEOUT: parseInt(process.env.OLLAMA_TIMEOUT || '30000'),
   
   // JWT
-  JWT_SECRET: process.env.JWT_SECRET || 'your-super-secret-jwt-key',
+  // A temporary development key avoids a shared, publicly known signing key.
+  JWT_SECRET: jwtSecret || randomBytes(32).toString('hex'),
   JWT_EXPIRE: process.env.JWT_EXPIRE || '15m',
   JWT_REFRESH_EXPIRE: process.env.JWT_REFRESH_EXPIRE || '7d',
   REQUIRE_EMAIL_VERIFICATION:

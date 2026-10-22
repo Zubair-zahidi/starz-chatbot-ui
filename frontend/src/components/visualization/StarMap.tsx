@@ -1,3 +1,4 @@
+import { visualNoise } from '../../utils/visualNoise'
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -18,10 +19,10 @@ const Points: React.FC = () => {
     const arr: Array<{ x: number; y: number; z: number; s: number }> = [];
     for (let i = 0; i < 800; i++) {
       arr.push({
-        x: (Math.random() - 0.5) * 30,
-        y: (Math.random() - 0.5) * 30,
-        z: (Math.random() - 0.5) * 30,
-        s: Math.random() * 0.12 + 0.02,
+        x: (visualNoise(i, 1) - 0.5) * 30,
+        y: (visualNoise(i, 2) - 0.5) * 30,
+        z: (visualNoise(i, 3) - 0.5) * 30,
+        s: visualNoise(i, 4) * 0.12 + 0.02,
       });
     }
     return arr;

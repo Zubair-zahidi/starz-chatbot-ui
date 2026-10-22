@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Activity, Search, Shield, ToggleLeft, ToggleRight, Trash2, Users } from 'lucide-react';
 import type { User } from '../types';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/authState';
 import { api, unwrap } from '../services/api/config';
 import { usersApi } from '../services/api/users';
 
@@ -17,7 +17,7 @@ const Admin: React.FC = () => {
     queryKey: ['admin-stats'],
     queryFn: async () => {
       const res = await api.get('/admin/stats');
-      return unwrap<any>(res);
+      return unwrap<{ users?: { total?: number }; chat?: { totalSessions?: number }; system?: { ollama?: { connected?: boolean } } }>(res);
     },
     refetchInterval: 15000,
     enabled: isAdmin,

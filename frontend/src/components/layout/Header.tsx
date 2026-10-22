@@ -1,7 +1,7 @@
 // src/components/layout/Header.tsx
 import React, { useState } from 'react';
 import { Menu, X, Bell, Search, User, Settings, LogOut } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/authState';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { Link } from 'react-router-dom';
 import {

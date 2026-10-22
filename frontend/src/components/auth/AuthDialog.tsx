@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Tabs from '@radix-ui/react-tabs';
 import { X, Lock, UserPlus } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/authState';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 

@@ -1,3 +1,4 @@
+import { visualNoise } from './utils/visualNoise'
 // src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -89,13 +90,13 @@ const ParticleField: React.FC = () => {
           key={i}
           className="absolute rounded-full bg-stellar-teal"
           style={{
-            width: Math.random() * 3 + 1,
-            height: Math.random() * 3 + 1,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            opacity: Math.random() * 0.5 + 0.2,
-            animation: `float ${Math.random() * 5 + 3}s infinite ease-in-out`,
-            animationDelay: `${Math.random() * 2}s`,
+            width: visualNoise(i, 1) * 3 + 1,
+            height: visualNoise(i, 2) * 3 + 1,
+            left: `${visualNoise(i, 3) * 100}%`,
+            top: `${visualNoise(i, 4) * 100}%`,
+            opacity: visualNoise(i, 5) * 0.5 + 0.2,
+            animation: `float ${visualNoise(i, 6) * 5 + 3}s infinite ease-in-out`,
+            animationDelay: `${visualNoise(i, 7) * 2}s`,
           }}
         />
       ))}

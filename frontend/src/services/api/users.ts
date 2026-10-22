@@ -1,5 +1,5 @@
 import { api } from './config';
-import type { User } from '../../types';
+import type { User, ApiUser } from '../../types';
 
 export type PaginatedMeta = {
   page: number;
@@ -10,16 +10,16 @@ export type PaginatedMeta = {
   hasPrev: boolean;
 };
 
-function normalizeUser(u: any): User {
-  if (!u) return u;
-  return { ...u, _id: u._id ?? u.id };
+function normalizeUser(u: ApiUser): User {
+  if (!u || !(u._id || u.id)) throw new Error('Invalid user response');
+  return { ...u, _id: (u._id ?? u.id)! };
 }
 
 export const usersApi = {
   list: async (params?: { page?: number; limit?: number; search?: string; role?: string }) => {
     const res = await api.get('/users', { params });
     return {
-      users: ((res?.data?.data ?? []) as any[]).map(normalizeUser),
+      users: ((res?.data?.data ?? []) as ApiUser[]).map(normalizeUser),
       meta: (res?.data?.meta ?? null) as PaginatedMeta | null,
     };
   },

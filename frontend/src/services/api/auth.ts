@@ -1,39 +1,39 @@
 // src/services/api/auth.ts
-import type { AuthResponse, User } from '../../types';
+import type { AuthResponse, User, ApiUser } from '../../types';
 import { api, unwrap } from './config';
 
-function normalizeUser(u: any): User {
-  if (!u) return u;
+function normalizeUser(u: ApiUser): User {
+  if (!u || !(u._id || u.id)) throw new Error('Invalid user response');
   return {
     ...u,
-    _id: u._id ?? u.id,
+    _id: (u._id ?? u.id)!,
   };
 }
 
 export const authApi = {
   login: async (credentials: { email: string; password: string }): Promise<AuthResponse> => {
     const response = await api.post('/auth/login', credentials);
-    const data = unwrap<{ user: any; tokens: { access: string; refresh: string } }>(response);
+    const data = unwrap<{ user: ApiUser; tokens: { access: string; refresh: string } }>(response);
     return { user: normalizeUser(data.user), tokens: data.tokens };
   },
 
   register: async (payload: { email: string; username: string; password: string }): Promise<AuthResponse> => {
     const response = await api.post('/auth/register', payload);
-    const data = unwrap<{ user: any; tokens: { access: string; refresh: string }; verificationToken?: string }>(
+    const data = unwrap<{ user: ApiUser; tokens: { access: string; refresh: string }; verificationToken?: string }>(
       response
     );
-    return { user: normalizeUser(data.user), tokens: data.tokens, ...(data.verificationToken ? { verificationToken: data.verificationToken } : {}) } as any;
+    return { user: normalizeUser(data.user), tokens: data.tokens, ...(data.verificationToken ? { verificationToken: data.verificationToken } : {}) };
   },
 
   getProfile: async (): Promise<User> => {
     const response = await api.get('/auth/me');
-    const data = unwrap<{ user: any }>(response);
+    const data = unwrap<{ user: ApiUser }>(response);
     return normalizeUser(data.user);
   },
 
   updateProfile: async (payload: Partial<User>): Promise<User> => {
     const response = await api.put('/auth/me', payload);
-    const data = unwrap<{ user: any }>(response);
+    const data = unwrap<{ user: ApiUser }>(response);
     return normalizeUser(data.user);
   },
 

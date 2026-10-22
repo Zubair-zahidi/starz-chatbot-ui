@@ -1,6 +1,7 @@
+import { errorMessage } from '../utils/errorMessage';
 import React, { useState } from 'react';
 import { Save, User as UserIcon } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/authState';
 import { authApi } from '../services/api/auth';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -70,8 +71,8 @@ const Profile: React.FC = () => {
                 const saved = await authApi.updateProfile({ username });
                 updateUser(saved);
                 toast.success('Profile updated');
-              } catch (e: any) {
-                toast.error(e?.message || 'Failed to update profile');
+              } catch (e: unknown) {
+                toast.error(errorMessage(e, 'Failed to update profile'));
               }
             }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stellar-blue/20 hover:bg-stellar-blue/30 transition-colors"
@@ -114,8 +115,8 @@ const Profile: React.FC = () => {
                 logout();
                 toast.success('Account deleted');
                 navigate('/chat');
-              } catch (e: any) {
-                const msg = e?.response?.data?.error?.message || e?.message || 'Failed to delete account';
+              } catch (e: unknown) {
+                const msg = errorMessage(e, 'Failed to delete account');
                 toast.error(msg);
               } finally {
                 setDeleting(false);

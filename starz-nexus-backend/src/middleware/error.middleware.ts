@@ -21,7 +21,6 @@ export const errorHandler = (
     stack: error.stack,
     path: req.path,
     method: req.method,
-    body: req.body,
     query: req.query,
     user: req.user?.id,
   });

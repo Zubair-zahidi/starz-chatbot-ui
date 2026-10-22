@@ -24,12 +24,14 @@ api.interceptors.request.use((config) => {
       localStorage.setItem('guest_id', guestId);
     }
     config.headers = config.headers ?? {};
-    (config.headers as any)['x-guest-id'] = guestId;
+    config.headers['x-guest-id'] = guestId;
   }
   return config;
 });
 
 // Unwrap our backend response shape: { success, message, data, meta? }
-export function unwrap<T>(response: any): T {
-  return (response?.data?.data ?? response?.data) as T;
+export function unwrap<T>(response: { data: unknown }): T {
+  const payload = response.data;
+  if (payload && typeof payload === 'object' && 'data' in payload) return payload.data as T;
+  return payload as T;
 }

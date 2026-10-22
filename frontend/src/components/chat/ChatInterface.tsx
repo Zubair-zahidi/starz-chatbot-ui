@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Download, MoreVertical, Pause, Trash2 } from 'lucide-react';
 import { useChat } from '../../hooks/useChat';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/authState';
 import MessageItem from './MessageItem';
 import ChatInput from './ChatInput';
 import QuickActions from './QuickActions';
@@ -51,7 +51,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ sessionId }) => {
 
     const loadHealth = async () => {
       try {
-        const base = (import.meta as any).env?.VITE_API_URL || '/api';
+        const base = import.meta.env.VITE_API_URL || '/api';
         const healthUrl = String(base).replace(/\/$/, '') + '/health';
         const res = await fetch(healthUrl);
         const json = await res.json();

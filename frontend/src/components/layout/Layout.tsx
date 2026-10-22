@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/authState';
 
 const Layout: React.FC = () => {
   useAuth(); // ensure auth context initialized for layout

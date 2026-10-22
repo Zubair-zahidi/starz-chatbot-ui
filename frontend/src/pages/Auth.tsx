@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/authState';
 import LoginForm from '../components/auth/LoginForm';
 
 const AuthPage: React.FC = () => {
@@ -9,7 +9,7 @@ const AuthPage: React.FC = () => {
   const { isAuthenticated, login } = useAuth();
   const [busy, setBusy] = useState(false);
 
-  const from = (location.state as any)?.from || '/dashboard';
+  const from = (location.state as { from?: string } | null)?.from || '/dashboard';
 
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />;

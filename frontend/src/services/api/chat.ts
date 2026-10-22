@@ -9,7 +9,7 @@ export const chatApi = {
     return data;
   },
 
-  createSession: async (title: string, options?: any): Promise<ChatSession> => {
+  createSession: async (title: string, options?: { context?: Partial<ChatSession['context']>; isArchived?: boolean }): Promise<ChatSession> => {
     const response = await api.post('/chat/sessions', { title, ...(options || {}) });
     const data = unwrap<{ session: ChatSession }>(response);
     return data.session;

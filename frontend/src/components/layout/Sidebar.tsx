@@ -2,7 +2,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, MessageSquare, Orbit, User, Shield } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/authState';
 
 const linkBase =
   'flex items-center gap-3 px-4 py-3 rounded-xl transition-colors border border-transparent';

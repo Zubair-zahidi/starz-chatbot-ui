@@ -1,35 +1,11 @@
-﻿// src/contexts/AuthContext.tsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { AuthContext, type RegisterData } from './authState';
+import { errorMessage } from '../utils/errorMessage';
+// src/contexts/AuthContext.tsx
+import React, { useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { User } from '../types';
 import { authApi } from '../services/api/auth';
 import { toast } from 'react-hot-toast';
-
-interface AuthContextType {
-  user: User | null;
-  isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
-  logout: () => void;
-  updateUser: (user: Partial<User>) => void;
-  isAuthenticated: boolean;
-}
-
-interface RegisterData {
-  email: string;
-  username: string;
-  password: string;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -64,12 +40,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(user);
       
       toast.success('Welcome to STARZ!');
-    } catch (error: any) {
-      const msg =
-        error?.response?.data?.error?.message ||
-        error?.response?.data?.message ||
-        error?.message ||
-        'Login failed';
+    } catch (error: unknown) {
+      const msg = errorMessage(error, 'Login failed');
       toast.error(msg);
       throw error;
     }
@@ -78,14 +50,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const register = async (data: RegisterData) => {
     try {
       const response = await authApi.register(data);
-      const { user, tokens } = response as any;
+      const { user, tokens } = response;
       
       localStorage.setItem('access_token', tokens.access);
       localStorage.setItem('refresh_token', tokens.refresh);
       setUser(user);
 
       // Dev-friendly: auto-verify if backend returns a verification token
-      const verificationToken = (response as any).verificationToken as string | undefined;
+      const verificationToken = response.verificationToken;
       if (verificationToken) {
         try {
           await authApi.verifyEmail(verificationToken);
@@ -95,12 +67,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
       
       toast.success('Account created successfully!');
-    } catch (error: any) {
-      const msg =
-        error?.response?.data?.error?.message ||
-        error?.response?.data?.message ||
-        error?.message ||
-        'Registration failed';
+    } catch (error: unknown) {
+      const msg = errorMessage(error, 'Registration failed');
       toast.error(msg);
       throw error;
     }
